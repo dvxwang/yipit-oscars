@@ -4,6 +4,8 @@ var express = require('express');
 var app = express();
 var path = require('path');
 
+app.use(express.static('views'));
+
 app.get('/calendar', function(req, res, next) {
 	res.render('calendar');
 });
