@@ -3,6 +3,7 @@
 <html>
 
 	<head>
+		<meta charset="utf-8">
 	</head>
 
 	<body>
@@ -10,12 +11,23 @@
 		<div class='headerLine'>
 		</div>
 
+		<div class='mainLogo'>
+			<img class='logo' src='logo.png'>
+		</div>
 		<div class='header'>
 			<div class='bodyBar'>
 			</div>
-			<div class='headerTitle'>
-				Chinese School
-			</div>			
+			<div class='headerTitle1'>
+				美国宾州大费城华侨公会
+			</div>
+			<div class='headerTitle2'>
+				Greater Philadelphia Overseas Chinese Association (GPOCA)
+			</div>
+			<div class='headerTitle3'>
+				地址: 1108 South 5th Street, Philadelphia, PA 19147 <br>
+				电话: (215) 271-0209 <br>
+				传真: (215) 271-0205
+			</div>
 		</div>
 
 		<div class='headerLine'>
@@ -25,30 +37,48 @@
 			<div class='bodyBar'>
 			</div>
 			<div class='sideMenu'>
-				<div class='sideButton'>
-					<div class='buttonBuffer'></div>
-					<div class='buttonText'>
-						Button 1
+				<div class='buttonHeader'>
+					<div class='buttonHeaderText'>
+						大费城华侨公会 <br>
+						GPOCA
 					</div>	
 				</div>	
 				<div class='sideButton'>
-					<div class='buttonBuffer'></div>
 					<div class='buttonText'>
-						Button 2
+						<li>活动</li>
 					</div>	
 				</div>	
 				<div class='sideButton'>
-					<div class='buttonBuffer'></div>
 					<div class='buttonText'>
-						Button 3
+						<li>老人福利互助组</li>
+					</div>	
+				</div>	
+				<div class='buttonHeader'>
+					<div class='buttonHeaderText'>
+						中山中文学校 <br>
+						Dr. Sun Yat-Sen Bilingual School
+					</div>	
+				</div>
+				<div class='sideButton'>
+					<div class='buttonText'>
+						<li>简介</li>
 					</div>	
 				</div>	
 				<div class='sideButton'>
-					<div class='buttonBuffer'></div>
 					<div class='buttonText'>
-						Button 4
+						<li>招生通知</li>
+					</div>	
+				</div>
+				<div class='sideButton'>
+					<div class='buttonText'>
+						<li>注册表</li>
 					</div>	
 				</div>	
+				<div class='sideButton'>
+					<div class='buttonText'>
+						<li>校历与课程表</li>
+					</div>	
+				</div>
 			</div>
 		</div>
 
@@ -56,6 +86,19 @@
 		</div>	
 
 		<div class='pageBody'>
+
+			<div class='bodyHeader'>宗旨</div>
+
+			本会是非盈利团体机构, 自一九八二年五月十五日经宾州联邦政府核准以合法免税注册立案,  义务为侨胞服务之团体, 以谋求我海外侨胞福祉, 促进我侨胞互助友爱团结, 全体会员必须遵守本公会会章。<br><br>
+
+			本会附设两个机构:  (1) 中山中文学校, (2) 老人福利互助组<br><br>
+
+			本会会员必须品德端正、热诚、无私,  有钱出钱, 有力出力,  为共同维护公会权益而努力,  禁止私下有攻击行为。<br><br>
+
+			<div class='bodyHeader'>规则</div>
+
+	        本会不介入任何政治色彩,  不搞党派,  不做非法活动,  包括严禁在本会内赌博
+	        和吸毒等不良行为。要发挥爱心、敬老、尊贤、扶幼等各项义务服务之责。<br>
 		</div>	
 
 	</body>
@@ -67,81 +110,110 @@
 			width: 100%;
 			margin: 0;
 		}
-
 		.headerLine {
 			width: 100%;
-			height: 5%;
+			height: 3%;
 			background-color: black;
 		}
-
 		.bodyBar {
 			width: 100%;
-			height: 10%;
+			height: 5%;
 			background-color: #7FFFD4;
 		}
-
-		.headerTitle {
+		.headerTitle1 {
 			width: 100%;
-			height: 80%;
-			font-size: 80px;
-			color: white;
+			height: 35%;
+			font-size: 50px;
+			color: black;
 			text-align: center;
 		}
-
-		.header {
+		.headerTitle2 {
 			width: 100%;
-			height: 25%;
-			background-color: #7FFFD4;
+			height: 20%;
+			font-size: 30px;
+			color: black;
+			text-align: center;
 		}
-
+		.headerTitle3 {
+			width: 100%;
+			height: 30%;
+			font-size: 16px;
+			color: black;
+			text-align: center;
+		}
+		.mainLogo {
+			width: 20%;
+			height: 29%;
+			background-color: #7FFFD4;
+			float: left;
+			overflow: hidden;
+		}
+		.logo {
+			width: 90%;
+			height: 90%;
+			margin: 5%;
+			border-radius: 60%;
+		}
+		.header {
+			width: 80%;
+			height: 29%;
+			background-color: #7FFFD4;
+			margin-left: 20%;
+		}
 		.sidebar {
 			width: 19.5%;
 			height: 65%;
 			background-color: #7FFFD4;
 			float: left;
 		}
-
 		.sideMenu {
 			height: 80%;
 			width: 80%;
 			margin-left: 10%;
 		}
-
 		.sideButton {
 			width: 100%;
 			margin-bottom: 5%;
 			height: 10%;
-			border: thin solid black;
 		}
-
-		.buttonBuffer {
+		.buttonHeader {
 			width: 100%;
-			height: 20%;
-			background-color: blue;
+			margin-bottom: 10%;
+			border-bottom: thin solid black;
 		}
-
+		.buttonHeaderText {
+			width: 100%;
+			height: 100%;
+			color: black;
+			font-weight: bold;
+			font-size: 20px;
+		}
 		.buttonText {
 			width: 100%;
 			height: 80%;
-			text-align: center;
 			color: black;
-			background-color: blue;
 		}
-
 		.menuBuffer {
 			width: 0.5%;
 			height: 65%;
 			background-color: black;
 			float: left;
 		}
-
 		.pageBody {
-			width: 80%;
+			width: 76%;
 			height: 65%;
 			background-color: #7FFFD4;
 			float: left;
+			padding: 0 2%;
+			overflow: auto;
+			font-size: 18px;
 		}
-
+		.bodyHeader {
+			font-size: 30px;
+			width: 100%;
+			text-align: center;
+			margin: 2% 0;
+		}
 	</style>
 
 </html>
