@@ -1,219 +1,100 @@
 <!DOCTYPE html>
-
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/helpers.js"></script>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+  </head>
+  <body>
 
-	<head>
-		<meta charset="utf-8">
-	</head>
+    <div class='header'>
+      <div class='headerText'>Yipit Oscar Winners</div>
+    </div>
 
-	<body>
+    <div class='commentBox'>
+      <div class='methodBox'>
+        <div class='methodHeader'>Methodology Notes:</div>
+        <div>* Orig. = data from API, Mod. = processed data</div>
+        <div>1. Movie years had excess whitespaces and parentheses/bracket content removed</div>
+        <div>2. Movie titles had trailing whitespaces and content in brackets removed</div>
+        <div>3. Unavailable movie budget are shown as "N/A"</div>
+        <div>4. Movie budgets are defaulted or converted to USD</div>
+        <div>5. Final budgets are adjusted for inflation between Jan. of award/current year</div>
+        <div>6. (If applicable) Final budgets are converted at current Jan exchange rate</div>
+        <div>7. Average budget is calculated with final budgets (inflation/currency adjusted)</div>
+        <div>8. Years with unavailable budgets are not included in average budget calculation</div>
+      </div>
+      <div class='methodBox'>
+        <div class='budgetBox'>
+          <div class='comparisonHeader'>Average budget (2016 USD)</div>    
+          <div class='budgetBody'>-</div>
+        </div>
+        <div class='excludeBox'>
+          <div class='comparisonHeader'>Excluded movies</div>    
+          <div class='excludeBody'></div>
+        </div>
+      </div>
+    </div>
 
-		<div class='headerLine'>
-		</div>
+    <div id="main"></div>
+    
+    <script>
+      $(document).ready(function() {
+        $.get("/fetchData", function(data, status){
 
-		<div class='mainLogo'>
-			<img class='logo' src='logo.png'>
-		</div>
-		<div class='header'>
-			<div class='bodyBar'>
-			</div>
-			<div class='headerTitle1'>
-				美国宾州大费城华侨公会
-			</div>
-			<div class='headerTitle2'>
-				Greater Philadelphia Overseas Chinese Association (GPOCA)
-			</div>
-			<div class='headerTitle3'>
-				地址: 1108 South 5th Street, Philadelphia, PA 19147 <br>
-				电话: (215) 271-0209 <br>
-				传真: (215) 271-0205
-			</div>
-		</div>
+          var totalBudget = 0;
+          var numCompanies = 0;
+          var skipList = [];
 
-		<div class='headerLine'>
-		</div>
+          //Add table header elements
+          $('#main').append(
+            $('<div class="tableRow">').append(
+              $('<div class="shortHeader headerBox">').text("Orig. Year"),
+              $('<div class="shortHeader headerBox"> ').text("Mod. Year"),
+              $('<div class="longHeader headerBox">').text("Orig. Movie Name"),
+              $('<div class="longHeader headerBox">').text("Mod. Movie Name"),
+              $('<div class="medHeader headerBox">').text("Orig. Budget"),
+              $('<div class="medHeader headerBox">').text("Mod. Budget"),
+              $('<div class="medHeader headerBox">').text("2016 USD $")
+            )
+          );
 
-		<div class='sidebar'>
-			<div class='bodyBar'>
-			</div>
-			<div class='sideMenu'>
-				<div class='buttonHeader'>
-					<div class='buttonHeaderText'>
-						大费城华侨公会 <br>
-						GPOCA
-					</div>	
-				</div>	
-				<div class='sideButton'>
-					<div class='buttonText'>
-						<li>活动</li>
-					</div>	
-				</div>	
-				<div class='sideButton'>
-					<div class='buttonText'>
-						<li>老人福利互助组</li>
-					</div>	
-				</div>	
-				<div class='buttonHeader'>
-					<div class='buttonHeaderText'>
-						中山中文学校 <br>
-						Dr. Sun Yat-Sen Bilingual School
-					</div>	
-				</div>
-				<div class='sideButton'>
-					<div class='buttonText'>
-						<li>简介</li>
-					</div>	
-				</div>	
-				<div class='sideButton'>
-					<div class='buttonText'>
-						<li>招生通知</li>
-					</div>	
-				</div>
-				<div class='sideButton'>
-					<div class='buttonText'>
-						<li>注册表</li>
-					</div>	
-				</div>	
-				<div class='sideButton'>
-					<div class='buttonText'>
-						<li>校历与课程表</li>
-					</div>	
-				</div>
-			</div>
-		</div>
+          //Add table row elements
+          data.forEach((elem) => {
 
-		<div class='menuBuffer'>
-		</div>	
+            if (elem.modBudget) {
+              numCompanies++;
+              totalBudget += elem.convertBudget;
+            } else {
+              skipList.push(elem.modMovie);
+            }
 
-		<div class='pageBody'>
+            $('#main').append(
+              $('<div class="tableRow">').append(
+                $('<div class="shortHeader smallFont headerBox">').text(JSON.stringify(elem.origYear)),
+                $('<div class="shortHeader smallFont headerBox"> ').text(JSON.stringify(elem.modYear)),
+                $('<div class="longHeader smallFont headerBox">').text(JSON.stringify(elem.origMovie)),
+                $('<div class="longHeader smallFont headerBox">').text(JSON.stringify(elem.modMovie)),
+                $('<div class="medHeader smallFont headerBox">').text(JSON.stringify(elem.origBudget)),
+                $('<div class="medHeader smallFont headerBox">').text(addCommas(JSON.stringify(elem.modBudget))),
+                $('<div class="medHeader smallFont headerBox">').text(addCommas(JSON.stringify(elem.convertBudget)))
+              )
+            );
+          });
 
-			<div class='bodyHeader'>宗旨</div>
+          //Add average budget and exclusions
+          $('.budgetBody').text(addCommas(Math.round(totalBudget/numCompanies)));
+          
+          var temp = skipList.map((elem)=>{
+            return $('<div>').text(elem)  
+          })
+          $('.excludeBody').append(temp);
 
-			本会是非盈利团体机构, 自一九八二年五月十五日经宾州联邦政府核准以合法免税注册立案,  义务为侨胞服务之团体, 以谋求我海外侨胞福祉, 促进我侨胞互助友爱团结, 全体会员必须遵守本公会会章。<br><br>
+        });
+      });
+    </script>
 
-			本会附设两个机构:  (1) 中山中文学校, (2) 老人福利互助组<br><br>
-
-			本会会员必须品德端正、热诚、无私,  有钱出钱, 有力出力,  为共同维护公会权益而努力,  禁止私下有攻击行为。<br><br>
-
-			<div class='bodyHeader'>规则</div>
-
-	        本会不介入任何政治色彩,  不搞党派,  不做非法活动,  包括严禁在本会内赌博
-	        和吸毒等不良行为。要发挥爱心、敬老、尊贤、扶幼等各项义务服务之责。<br>
-		</div>	
-
-	</body>
-
-	<style>
-
-		html, body {
-			height: 100%;
-			width: 100%;
-			margin: 0;
-		}
-		.headerLine {
-			width: 100%;
-			height: 3%;
-			background-color: black;
-		}
-		.bodyBar {
-			width: 100%;
-			height: 5%;
-			background-color: #7FFFD4;
-		}
-		.headerTitle1 {
-			width: 100%;
-			height: 35%;
-			font-size: 50px;
-			color: black;
-			text-align: center;
-		}
-		.headerTitle2 {
-			width: 100%;
-			height: 20%;
-			font-size: 30px;
-			color: black;
-			text-align: center;
-		}
-		.headerTitle3 {
-			width: 100%;
-			height: 30%;
-			font-size: 16px;
-			color: black;
-			text-align: center;
-		}
-		.mainLogo {
-			width: 20%;
-			height: 29%;
-			background-color: #7FFFD4;
-			float: left;
-			overflow: hidden;
-		}
-		.logo {
-			width: 90%;
-			height: 90%;
-			margin: 5%;
-			border-radius: 60%;
-		}
-		.header {
-			width: 80%;
-			height: 29%;
-			background-color: #7FFFD4;
-			margin-left: 20%;
-		}
-		.sidebar {
-			width: 19.5%;
-			height: 65%;
-			background-color: #7FFFD4;
-			float: left;
-		}
-		.sideMenu {
-			height: 80%;
-			width: 80%;
-			margin-left: 10%;
-		}
-		.sideButton {
-			width: 100%;
-			margin-bottom: 5%;
-			height: 10%;
-		}
-		.buttonHeader {
-			width: 100%;
-			margin-bottom: 10%;
-			border-bottom: thin solid black;
-		}
-		.buttonHeaderText {
-			width: 100%;
-			height: 100%;
-			color: black;
-			font-weight: bold;
-			font-size: 20px;
-		}
-		.buttonText {
-			width: 100%;
-			height: 80%;
-			color: black;
-		}
-		.menuBuffer {
-			width: 0.5%;
-			height: 65%;
-			background-color: black;
-			float: left;
-		}
-		.pageBody {
-			width: 76%;
-			height: 65%;
-			background-color: #7FFFD4;
-			float: left;
-			padding: 0 2%;
-			overflow: auto;
-			font-size: 18px;
-		}
-		.bodyHeader {
-			font-size: 30px;
-			width: 100%;
-			text-align: center;
-			margin: 2% 0;
-		}
-	</style>
-
+  </body>
 </html>
