@@ -33,6 +33,7 @@ html,body, #main {
   padding: 1%;
   box-sizing: border-box;
   float: left;
+  overflow: auto;
 }
 
 .methodHeader {
